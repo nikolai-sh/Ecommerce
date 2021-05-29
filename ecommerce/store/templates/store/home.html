@@ -1,5 +1,9 @@
 {% extends 'store/base.html' %}
 
 {% block content %}
-<h3>Home Page</h3>
+
+    {% for item in item_list %}
+        <li>{{ item.title }}</li>
+    {% endfor %}
+
 {% endblock %}
