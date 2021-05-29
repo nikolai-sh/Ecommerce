@@ -4,6 +4,7 @@ from store.models import Item, Employee
 
 class HomePageTest(TestCase):
     
+
     def setUp(self):
         
         Item.objects.create(title='Phone', slug ='phone',
@@ -13,10 +14,11 @@ class HomePageTest(TestCase):
                             email = 'emp@mail.com'
                                 ) 
                             )
-   
+
     def test_homepage(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
+
 
     def test_homepage_content(self):
         response = self.client.get('/')
