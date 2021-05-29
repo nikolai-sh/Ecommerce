@@ -1,4 +1,8 @@
 from django.shortcuts import render
+from annoying.decorators import render_to
+from .models import Item
 
+@render_to('store/home.html')
 def home_view(request):
-    return render(request, 'store/home.html')
+    items = Item.objects.all()
+    return {'items': items}
