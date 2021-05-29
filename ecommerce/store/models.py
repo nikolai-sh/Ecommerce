@@ -20,7 +20,7 @@ class Employee(models.Model):
     email = models.EmailField(max_length=200)
 
     def __str__(self) -> str:
-        return f'{self.user.first_name} {self.user.last_name}'
+        return f'{self.name}'
 
 class Sale(models.Model):
 
