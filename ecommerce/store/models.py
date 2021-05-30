@@ -5,7 +5,7 @@ class Item(models.Model):
 
     title = models.CharField(max_length=255, verbose_name="Наименование")
     slug = models.SlugField(unique=True)
-    image = models.ImageField(upload_to="media/images/")
+    image = models.ImageField(upload_to="images/")
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Цена")
     employee = models.ForeignKey('Employee', verbose_name="Продавец", on_delete=models.CASCADE)
    
