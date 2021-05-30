@@ -3,6 +3,8 @@
 */__pycache__/*
 /__pycache__/*
 */images/*
+*.jpeg
+*.jpg
 db.sqlite3
 *.py[cod]
 *$py.class
