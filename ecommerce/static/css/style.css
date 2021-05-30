@@ -1,0 +1,14 @@
+
+div.col:nth-child(1) {
+    margin-bottom: 10px;
+    }
+
+a {
+    text-decoration: none;
+    }
+
+.btn-outline-secondary {
+    color:#0d6efd;
+    border-color:#6c757d
+    }
+       
