@@ -13,3 +13,17 @@ a {
     border-color:#6c757d
     }
        
+#qty {
+    width: 50px;
+    }
+    
+#employee {
+    width: 100px;
+    }
+    
+#total {
+    width: 100px;
+    text-align: center;
+    border: none;
+    }
+       
