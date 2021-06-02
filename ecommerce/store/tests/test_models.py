@@ -69,3 +69,8 @@ class SaleModelTest(TestCase):
         sale = Sale.objects.get(id=1)
         field_label = sale._meta.get_field('qty').verbose_name
         self.assertEquals(field_label,'Количество')
+
+    def test_get_total_price(self):
+        sale = Sale.objects.get(id=1)
+        total_price = sale.item.price * sale.qty
+        self.assertEqual(total_price, 2400)
