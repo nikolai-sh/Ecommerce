@@ -27,11 +27,11 @@ class Sale(models.Model):
 
     item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name="Товар")
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, verbose_name="Продавец")
-    total_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Общая цена")
     qty = models.PositiveIntegerField(default=0, verbose_name="Количество")
     date_sales = models.DateTimeField(verbose_name="Дата продажи", auto_now_add=True)
 
-    def count_total_price(self):
+    def get_total_price(self):
+    
         total_price = self.item.price * self.qty
         return total_price
     
