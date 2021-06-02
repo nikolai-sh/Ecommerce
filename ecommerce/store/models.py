@@ -7,22 +7,20 @@ class Item(models.Model):
     slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to="images/")
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Цена")
-    employee = models.ForeignKey('Employee', verbose_name="Продавец", on_delete=models.CASCADE)
    
     def __str__(self) -> str:
         return self.title
     
     def get_absolute_url(self):
         return reverse("item-detail", kwargs={"slug": self.slug})
-    
-    
+      
 
 class Employee(models.Model):
 
     name = models.CharField(max_length=255, verbose_name="Продавец")
     
     def __str__(self) -> str:
-        return f'{self.name}'
+        return self.name
 
 
 class Sale(models.Model):
@@ -32,3 +30,10 @@ class Sale(models.Model):
     total_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Общая цена")
     qty = models.PositiveIntegerField(default=0, verbose_name="Количество")
     date_sales = models.DateTimeField(verbose_name="Дата продажи", auto_now_add=True)
+
+    def count_total_price(self):
+        total_price = self.item.price * self.qty
+        return total_price
+    
+    def __str__(self) -> str:
+        return f'Продажа №{self.id}'
