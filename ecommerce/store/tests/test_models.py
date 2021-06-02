@@ -53,14 +53,19 @@ class SaleModelTest(TestCase):
         #Set up non-modified objects used by all test methods
         employee = Employee.objects.create(name='Employee1')
         item = Item.objects.create(title='Phone', slug='phone', image='image.jpeg', price=1200)
-        Sale.objects.create(item = item, employee= employee, qty=2, total_price=(item.price * Sale.qty) )
+        Sale.objects.create(item = item, employee= employee, qty=2)
     
-    # def test_name_label(self):
-    #     author = Sale.objects.get(id=1)
-    #     field_label = author._meta.get_field('name').verbose_name
-    #     self.assertEquals(field_label,'Продавец')
+    def test_item_label(self):
+        sale = Sale.objects.get(id=1)
+        field_label = sale._meta.get_field('item').verbose_name
+        self.assertEquals(field_label,'Товар')
+   
+    def test_employee_label(self):
+        sale = Sale.objects.get(id=1)
+        field_label = sale._meta.get_field('employee').verbose_name
+        self.assertEquals(field_label,'Продавец')
     
-    # def test_name_max_length(self):
-    #     employee = Sale.objects.get(id=1)
-    #     max_length = employee._meta.get_field('name').max_length
-    #     self.assertEquals(max_length, 255)
+    def test_qty_label(self):
+        sale = Sale.objects.get(id=1)
+        field_label = sale._meta.get_field('qty').verbose_name
+        self.assertEquals(field_label,'Количество')
