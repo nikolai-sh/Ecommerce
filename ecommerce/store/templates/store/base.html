@@ -18,11 +18,8 @@
     
     <div class="container py-3">
       <header>
-        <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
-          <!-- <a href="/" class="d-flex align-items-center text-dark text-decoration-none"> -->
+        <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">  
             <span class="fs-4">Ecommerce</span>
-          </a>
-    
           <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
                 <a class="me-3 py-2 text-dark text-decoration-none" href="#">Покупки</a>
             {% if user.is_authenticated %}
@@ -30,18 +27,15 @@
                 <button type="button" class="btn btn-link">Выйти</button>
             {% else %}
                 <button type="button" class="btn btn-link">Войти</button>
-            {% endif %}
-           
+            {% endif %}  
           </nav>
         </div>
       </header>
     
-      <main>
-        <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+      <main>     
         {% block content %}
            
-        {% endblock %}
-        </div>
+        {% endblock %}        
       </main>
     
       <footer class="pt-4 my-md-5 pt-md-5 border-top">
