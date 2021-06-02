@@ -30,6 +30,7 @@ class Sale(models.Model):
     qty = models.PositiveIntegerField(default=0, verbose_name="Количество")
     date_sales = models.DateTimeField(verbose_name="Дата продажи", auto_now_add=True)
 
+    @property
     def get_total_price(self):
     
         total_price = self.item.price * self.qty
