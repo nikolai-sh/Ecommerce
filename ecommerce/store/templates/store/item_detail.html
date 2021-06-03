@@ -17,14 +17,18 @@
                     <div class="col text-center">Цена: </div>
                     <div id="price" class="col text-center">{{ item.price }} грн.</div>
                 </div>
-                    <form action="post">
+                    <form method="POST">
+                        {% csrf_token %}
                         <div class="row">
                             <div class="col text-center">
                                 <label for="employee">Выберите продавца:</label> 
                             </div>
                             <div class="col text-center">
-                                <select id="employee" name="employee" value="{{ employee }}">
-                                    <option></option>
+                                <select id="employee" name="employee">
+                                    <option value=""></option>
+                                    {% for emp in employee %}
+                                        <option value="{{ emp }}">{{ emp }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -60,18 +64,7 @@
  
     <script>
         
-        let sel = document.getElementById('employee');
-        //parse context data
-        let emp = JSON.parse("{{ employee|escapejs }}")
-        
-        for (let i = 0; i < emp.length; i++) {
-            // create new option element
-            let op = document.createElement("option");
-            op.value = emp[i][0];
-            op.text = emp[i][0];
-            // add opt to end of select box (sel)
-            sel.appendChild(op);         
-        }      
+       
         //Count total price                                      
         let price = JSON.parse("{{ item.price|escapejs }}")
         let qty = document.getElementById("qty")

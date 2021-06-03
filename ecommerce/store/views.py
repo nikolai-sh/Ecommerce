@@ -1,7 +1,8 @@
+from django.http import request
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .models import Item, Employee, Sale
-import json
+
 
 class HomePageView(ListView):
     model = Item
@@ -13,7 +14,13 @@ class ItemDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        employee = list(Employee.objects.values_list('name'))
-        context["employee"] = json.dumps(employee)
+        employee = Employee.objects.all()
+        context["employee"] = employee
         return context
     
+    def post(self, request, *args, **kwargs):
+        if request.method == 'POST':
+            
+            print(employee=request.POST.get(form.option.value))
+
+            
