@@ -1,0 +1,75 @@
+{% extends 'store/base.html' %}
+{% load static %}
+{% block title %} {{ item.title }} {% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <img src="{{ item.image.url  }}" class="img-thumbnail" alt="...">
+            </div>
+            <div class="col">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col text-center">Товар: </div>
+                        <div class="col text-center">{{ form.item }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">Цена: </div>
+                        <div id="price" class="col text-center">{{ item.price }} грн.</div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <label for="employee">Выберите продавца:</label> 
+                        </div>
+                        <div class="col text-center">                           
+                                   {{ form.employee }}                           
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <label for="qty">Количество ед. товара: </label> 
+                        </div>
+                        <div class="col text-center">
+                            <div>
+                                <input type="number" id="qty" name="qty" value='{{ form.qty }}' min="1" >                       
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center"><strong>Общая цена:</strong></div>
+                        <div class="col text-center">
+                            <strong>
+                                <input type="text" id="total" name="total" value="{{ item.price }}">
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center"></div>
+                        <div class="col text-center">
+                            <button type="submit" class="btn btn-success">Оплатить</button>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+    
+    <script>
+             
+        //Count total price                                      
+        let price = JSON.parse("{{ item.price|escapejs }}")
+        let qty = document.getElementById("qty")
+        let total_price = document.getElementById("total")
+        
+        qty.onchange = function () {
+            total_price.value = (price * qty.value).toFixed(2);
+        }
+        
+    </script>
+    
+{% endblock %}
+         

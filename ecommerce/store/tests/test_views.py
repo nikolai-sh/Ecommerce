@@ -8,11 +8,7 @@ class HomePageTest(TestCase):
     def setUp(self):
         
         Item.objects.create(title='Phone', slug ='phone',
-                            image='images.jpg', price=12000, 
-                            employee=Employee.objects.create(
-                            name=User.objects.create_user('Employee', password='bar'), 
-                            email = 'emp@mail.com'
-                                ) 
+                            image='images.jpg', price=12000,
                             )
 
     def test_homepage(self):
