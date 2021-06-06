@@ -77,6 +77,8 @@ This is the test task:
 
 1. Bring the look of all lists to one neat look.
 
+## TODO
+
 1. Add a "Buy" button in the product line by which to translate
     user to a page with a description of the product, a field for entering its quantity,
     a drop-down list of sellers and a "Pay" button. At the push of a button
