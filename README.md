@@ -77,7 +77,6 @@ This is the test task:
 
 1. Bring the look of all lists to one neat look.
 
-## TODO
 
 1. Add a "Buy" button in the product line by which to translate
     user to a page with a description of the product, a field for entering its quantity,
@@ -104,6 +103,9 @@ This is the test task:
       coverage html
       coverage erase
       rm -rf htmlcov
+
+## TODO
+
 1. Add a context processor adding the date and time the page was generated
      to the context of all application templates. Output it to footer.
      
