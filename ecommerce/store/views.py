@@ -1,6 +1,7 @@
 from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView
-from .models import Item, Employee
+from django.contrib.auth.mixins import LoginRequiredMixin
+from .models import Item, Employee, Sale
 from django.views.generic.edit import FormMixin
 from .forms import SalesForms
 
@@ -29,6 +30,7 @@ class ItemDetailView(FormMixin, DetailView):
             return redirect('home')
 
  
-
- 
-                    
+class SaleList(LoginRequiredMixin, ListView):
+    model = Sale
+    template_name = 'store/sale_list.html'
+    paginate_by = 5

@@ -23,16 +23,24 @@
               <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'home' %}">Ecommerce</a>
             </span>
           <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-                <a class="me-3 py-2 text-dark text-decoration-none" href="#">Покупки</a>
+                <a class="me-3 py-2 text-dark text-decoration-none" href="{% url 'sales-list' %}">Покупки</a>
             {% if user.is_authenticated %}
                 <a class="me-3 py-2 text-dark text-decoration-none" href="#">{{ user.username }}</a>
-                <button type="button" class="btn btn-link">Выйти</button>
+                <a  class="btn btn-link" href="{% url 'logout' %}">Выйти</a>
             {% else %}
-                <button type="button" class="btn btn-link">Войти</button>
+                <a  class="btn btn-link" href="{% url 'register' %}">Регистрация</a>
+                <a  class="btn btn-link" href="{% url 'login' %}">Войти</a>
             {% endif %}  
           </nav>
         </div>
       </header>
+      {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          <p class="message">{{ message }}</p>
+        </div>
+      {% endfor %}
+    {% endif %}
     
       <main>     
         {% block content %}
