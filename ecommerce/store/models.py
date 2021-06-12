@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
 
-
 class Item(models.Model):
 
     title = models.CharField(max_length=255, verbose_name="Наименование")
@@ -32,7 +31,10 @@ class Sale(models.Model):
     date_sales = models.DateTimeField(verbose_name="Дата продажи", auto_now_add=True)
     total_price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Общая цена", blank=True, null=True)
    
-     
+    class Meta:
+        ordering = ["-date_sales"]     
+    
+
     def save(self, *args, **kwargs):
         self.total_price = self.item.price * self.qty
         super(Sale, self).save(*args, **kwargs)
