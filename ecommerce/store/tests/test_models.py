@@ -18,6 +18,10 @@ class EmployeeModelTest(TestCase):
         employee = Employee.objects.get(id=1)
         max_length = employee._meta.get_field('name').max_length
         self.assertEquals(max_length, 255)
+    
+    def test__str__representation(self):
+        employee = Employee.objects.get(id=1)
+        self.assertEquals(employee.name,'Employee1')
 
 class ItemModelTest(TestCase):
 
