@@ -10,8 +10,8 @@ class EmployeeModelTest(TestCase):
         Employee.objects.create(name='Employee1')
     
     def test_name_label(self):
-        author = Employee.objects.get(id=1)
-        field_label = author._meta.get_field('name').verbose_name
+        employee = Employee.objects.get(id=1)
+        field_label = employee._meta.get_field('name').verbose_name
         self.assertEquals(field_label,'Продавец')
     
     def test_name_max_length(self):
