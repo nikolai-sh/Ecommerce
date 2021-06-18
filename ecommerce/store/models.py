@@ -52,8 +52,7 @@ class UpdatedItemPrice(models.Model):
     class Meta:
             ordering = ["-update_date"] 
     
-    def __str__(self) -> str:
-        return f'Новая цена для {self.item}'
+    
 
 
 @receiver(post_save, sender=Item)
