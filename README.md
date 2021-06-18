@@ -106,8 +106,6 @@ This is the test task:
 
 1. Add a context processor adding the date and time the page was generated
      to the context of all application templates. Output it to footer.
-
-## TODO
      
 1. Create a model that will store product price changes.
      Add a post_save signal handler that stores the date in it
