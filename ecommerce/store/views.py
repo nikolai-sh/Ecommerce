@@ -30,7 +30,9 @@ class ItemDetailView(FormMixin, DetailView):
         if form.is_valid():        
             form.save()
             return redirect('home')
+
             
+
  
 class SaleList(LoginRequiredMixin, ListView):
     model = Sale

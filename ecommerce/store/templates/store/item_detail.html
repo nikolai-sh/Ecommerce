@@ -8,18 +8,20 @@
         <div class="row">
             <div class="col">
                 <img src="{{ item.image.url  }}" class="img-thumbnail" alt="...">
+                <div class="text-left"><a href="{% url 'updated-price' slug=item.slug %}"><sub>*Статистика изменения цены на товар.</sub></a></div>
             </div>
-            <div class="col">
+            <div class="col gy-2">
                 <form method="POST">
                     {% csrf_token %}
-                    <div class="row">
-                        <div class="col text-center">Товар: </div>
-                        <div class="col text-center">{{ form.item }}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col text-center">Цена: </div>
-                        <div id="price" class="col text-center">{{ item.price }} грн.</div>
-                    </div>
+                <div class="row gy-2">
+                    <div class="col text-center">Товар: </div>
+                    <div class="col text-center">{{ form.item }}</div>
+                    <!-- <input type="text" disabled value='{{ form.item }}'> -->
+                </div>
+                <div class="row gy-2">
+                    <div class="col text-center">Цена: </div>
+                    <div id="price" class="col text-center">{{ item.price }} грн.</div> 
+                </div>
                     <div class="row">
                         <div class="col text-center">
                             <label for="employee">Выберите продавца:</label> 
@@ -63,6 +65,7 @@
         //Count total price                                      
         let price = JSON.parse("{{ item.price|escapejs }}")
         let qty = document.getElementById("qty")
+        qty.value = 1
         let total_price = document.getElementById("total")
         
         qty.onchange = function () {
