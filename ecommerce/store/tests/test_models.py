@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from store.models import Item, Employee, Sale
+from store.models import Item, Employee, Sale, UpdatedItemPrice
 
 class EmployeeModelTest(TestCase):
 
@@ -49,6 +49,22 @@ class ItemModelTest(TestCase):
         item = Item.objects.get(id=1)
         max_digits = item._meta.get_field('price').max_digits
         self.assertEquals(max_digits, 9)
+    
+    def test_updated_item_price(self):
+        item = Item.objects.get(id=1)
+        item.price = 1300
+        item.save()
+        self.assertEqual(item.price, 1300)
+    
+    def test_when_update_item_price_creates_UpdateItemPrice_object(self):
+        item = Item.objects.get(id=1)
+        item.price = 2500
+        item.save()
+        update_item_price = UpdatedItemPrice.objects.get(item=item)
+        self.assertEqual(item.price, 2500)
+        self.assertNotEqual(update_item_price, None)
+        self.assertEqual(update_item_price.updated_price, 2500)
+
 
 class SaleModelTest(TestCase):
 
