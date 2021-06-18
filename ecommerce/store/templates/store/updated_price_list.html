@@ -1,0 +1,33 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block title %}Статистика{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <h4>Статистика изменения цены на <strong>{{ item.title }}</strong></h4>
+        {% if updated_price %}
+            <table class="styled-table">
+                <thead>
+                    <tr>           
+                        <th>Цена, грн.</th>
+                        <th>Дата изменения цены</th>
+                    </tr>
+                </thead>
+            
+                {%for data in updated_price %}
+                <tr>      
+                    <td>{{ data.updated_price }}</td>
+                    <td>{{ data.update_date|date:"j/ m /y, H:m:s"}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {{ new.item }}
+
+        {% else %}
+            <h4>На данный момент цена на товар не менялась и составляет: <strong>{{ item.price }}грн.</strong></h4>
+        {% endif %}
+        
+    </div>
+
+{% endblock %}
