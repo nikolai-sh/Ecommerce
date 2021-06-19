@@ -1,19 +1,28 @@
 {% extends 'store/base.html' %}
 
 {% block content %}
+<style>
+.errorlist li {
+    list-style-type: none;
+}
+</style>
     <form method="POST">
         {% csrf_token %}
+        {{ form.non_field_errors }}
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Регистрация</legend>
             <label for="">Имя пользователя</label>
             <p>{{ form.username }}</p>
+           <small class="text-danger">{{ form.username.errors }}</small> 
             <label for="">Пароль</label>
             <p>{{ form.password1 }}</p>
+            <small class="text-danger">{{ form.password1.errors }}</small> 
             <label for="">Подтвердите пароль</label>
             <p>{{ form.password2 }}</p>
+            <small class="text-danger">{{ form.password2.errors }}</small> 
         </fieldset>
         <div class="form-group">
-            <button class="btn btn-outline-info" type="submit">Войти</button>
+            <button class="btn btn-outline-primary" type="submit">Войти</button>
         </div>
     </form>
 {% endblock %}
