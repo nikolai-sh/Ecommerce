@@ -4,12 +4,8 @@ from store.models import Item, Employee
 
 class HomePageTest(TestCase):
     
-
-    def setUp(self):
-        
-        Item.objects.create(title='Phone', slug ='phone',
-                            image='images.jpg', price=12000,
-                            )
+    def setUp(self):       
+        Item.objects.create(title='Phone', slug ='phone', image='images.jpg', price=12000)
 
     def test_homepage(self):
         response = self.client.get('/')
@@ -21,3 +17,19 @@ class HomePageTest(TestCase):
         item = Item.objects.get(id=1)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(item.title in str(response.content))
+
+class ConfirmSaleViewTest(TestCase):
+
+    def setUp(self):       
+        Item.objects.create(title='Phone', slug ='phone', image='images.jpg', price=12000)
+
+    def test_get(self):
+        response = self.client.get('/phone/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, text='Phone')
+    
+    def test_post_success(self):
+        response = self.client.post('/phone/', data={"employee": 'ATB', "qty": 1})
+        self.assertEqual(response.status_code, 200)
+        
+    
