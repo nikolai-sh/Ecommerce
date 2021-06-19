@@ -18,7 +18,9 @@ class ItemAdmin(admin.ModelAdmin):
                 if form.initial[field] != form.cleaned_data[field]:
                     update_fields.append(field)
                 
-        obj.save(update_fields=update_fields)
+            obj.save(update_fields=update_fields)
+        else:
+            obj.save()
         
 
 @admin.register(UpdatedItemPrice)
