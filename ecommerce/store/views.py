@@ -19,7 +19,7 @@ class ConfirmSaleView(View):
         item = Item.objects.get(slug=self.kwargs.get('slug'))
         context["item"] = item
         context["form"] = SalesForms()
-        return render(request,'store/item_detail.html', context=context )
+        return render(request,'store/confirm_sale.html', context=context )
 
     def post(self, request, *args, **kwargs):
         form = SalesForms(self.request.POST)     
@@ -34,7 +34,7 @@ class ConfirmSaleView(View):
             return redirect('home')
         else:
             messages.warning(request, f'Что-то пошло не так!')
-            return self.get(request)
+            return self.get(request, *args, **kwargs)
             
 
             
