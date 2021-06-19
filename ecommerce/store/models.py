@@ -56,9 +56,10 @@ class UpdatedItemPrice(models.Model):
 
 
 @receiver(post_save, sender=Item)
-def create_update_item_price(sender, instance, created, **kwargs):
-    if not created:
+def create_updated_item_price(sender, instance, created, **kwargs):
+    
+    if not created and 'price' in kwargs['update_fields']:
         UpdatedItemPrice.objects.create(item=instance, updated_price=instance.price)
-   
+
         
         
