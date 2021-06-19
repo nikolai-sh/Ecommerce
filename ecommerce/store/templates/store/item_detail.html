@@ -3,52 +3,57 @@
 {% block title %} {{ item.title }} {% endblock %}
 
 {% block content %}
+<style>
+    #id_qty {
+        width: 50px;
+       }
+       
+</style>
 
     <div class="container">
         <div class="row gy-3">
             <div class="col">
                 <img src="{{ item.image.url  }}" class="img-thumbnail" width="400" alt="...">
-                <div class="text-left"><a href="{% url 'updated-price' slug=item.slug %}"><sub>*Статистика изменения цены на товар.</sub></a></div>
+                <div class="text-left"><a href="{% url 'updated-price' item.slug %}"><sub>*Статистика изменения цены на товар.</sub></a></div>
             </div>
             <div class="col gy-2">
-                <form method="POST">
-                    {% csrf_token %}
                 <div class="row gy-2">
                     <div class="col text-center gy-3">Товар: </div>
-                    <!-- <div class="col text-center gy-3">{{ form.item }}</div> -->
                     <div class="col text-center gy-3">{{ item.title }}</div>
-                    <input type="hidden" name="form.item" value= 'form.item'  disabled>
                 </div>
                 <div class="row gy-2">
                     <div class="col text-center gy-3">Цена: </div>
                     <div id="price" class="col text-center gy-3">{{ item.price }} грн.</div> 
                 </div>
-                    <div class="row">
-                        <div class="col text-center">
-                            <label for="employee">Выберите продавца:</label> 
-                        </div>
-                        <div class="col text-center">                           
-                                   {{ form.employee }}                           
+                <form method="POST">
+                    {% csrf_token %}
+                   
+                <div class="row">
+                    <div class="col text-center">
+                        <label for="employee">Выберите продавца:</label> 
+                    </div>
+                    <div class="col text-center">                           
+                            {{ form.employee }}                           
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-center gy-3">
+                        <label for="qty">Количество ед. товара: </label> 
+                    </div>
+                    <div class="col text-center gy-3" style="width: 50px;">
+                        <div>
+                            {{ form.qty }}
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col text-center gy-3">
-                            <label for="qty">Количество ед. товара: </label> 
-                        </div>
-                        <div class="col text-center gy-3">
-                            <div>
-                                <input type="number" id="qty" name="qty" value='{{ form.qty }}' min="1" >                       
-                            </div>
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col text-center gy-3"><strong>Общая цена:</strong></div>
+                    <div class="col text-center gy-3">
+                        <strong>
+                            <input type="text" id="total" name="total" value="{{ item.price }}">
+                        </strong>
                     </div>
-                    <div class="row">
-                        <div class="col text-center gy-3"><strong>Общая цена:</strong></div>
-                        <div class="col text-center gy-3">
-                            <strong>
-                                <input type="text" id="total" name="total" value="{{ item.price }}">
-                            </strong>
-                        </div>
-                    </div>
+                </div>
                     <div class="row">
                         <div class="col text-center gy-3"></div>
                         <div class="col text-center gy-3">
@@ -65,8 +70,7 @@
              
         //Count total price                                      
         let price = JSON.parse("{{ item.price|escapejs }}")
-        let qty = document.getElementById("qty")
-        qty.value = 1
+        let qty = document.getElementById("id_qty")
         let total_price = document.getElementById("total")
         
         qty.onchange = function () {
@@ -76,4 +80,30 @@
     </script>
     
 {% endblock %}
-         
+
+<!-- <div class="row">
+    <div class="col text-center">
+        <label for="employee">Выберите продавца:</label> 
+    </div>
+    <div class="col text-center">                           
+               {{ form.employee }}                           
+    </div>
+</div>
+<div class="row">
+    <div class="col text-center gy-3">
+        <label for="qty">Количество ед. товара: </label> 
+    </div>
+    <div class="col text-center gy-3">
+        <div>
+            <input type="number" id="qty" name="qty" value='{{ form.qty }}' min="1" >                       
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col text-center gy-3"><strong>Общая цена:</strong></div>
+    <div class="col text-center gy-3">
+        <strong>
+            <input type="text" id="total" name="total" value="{{ item.price }}">
+        </strong>
+    </div>
+</div> -->

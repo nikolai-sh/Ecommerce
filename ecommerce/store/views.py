@@ -1,10 +1,10 @@
-from django.shortcuts import redirect, render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.shortcuts import redirect, render
+from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import View
-from .models import Item, Employee, Sale, UpdatedItemPrice
-from django.views.generic.edit import FormMixin
+from .models import Item, Sale, UpdatedItemPrice
 from .forms import SalesForms
+from django.contrib import messages
 
 
 class HomePageView(ListView):
@@ -12,24 +12,30 @@ class HomePageView(ListView):
     template_name = 'store/home.html'
     paginate_by = 9
 
-class ItemDetailView(FormMixin, DetailView):
-    model = Item
-    form_class = SalesForms
-    template_name = 'store/item_detail.html'
+class ConfirmSaleView(View):
 
-
-    def get_context_data(self, **kwargs):
-        context = super(ItemDetailView, self).get_context_data(**kwargs)
-        employee = Employee.objects.all()
-        context["employee"] = employee
-        context["form"] = SalesForms(initial={'item': self.object})
-        return context
+    def get(self, request, *args, **kwargs):
+        context = {}
+        item = Item.objects.get(slug=self.kwargs.get('slug'))
+        context["item"] = item
+        context["form"] = SalesForms()
+        return render(request,'store/item_detail.html', context=context )
 
     def post(self, request, *args, **kwargs):
-        form = self.get_form()     
-        if form.is_valid():        
-            form.save()
+        form = SalesForms(self.request.POST)     
+        item = Item.objects.get(slug=self.kwargs.get('slug'))
+     
+        if form.is_valid(): 
+            employee = form.cleaned_data['employee'] 
+            qty = form.cleaned_data['qty'] 
+            sale = Sale(item=item, employee=employee, qty=qty)     
+            sale.save()
+            messages.success(request, f'Спасибо за покупку!')
             return redirect('home')
+        else:
+            messages.warning(request, f'Что-то пошло не так!')
+            return self.get(request)
+            
 
             
 
