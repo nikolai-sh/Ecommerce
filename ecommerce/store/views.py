@@ -37,13 +37,11 @@ class ConfirmSaleView(View):
             return self.get(request, *args, **kwargs)
             
 
-            
-
- 
 class SaleList(LoginRequiredMixin, ListView):
     model = Sale
     template_name = 'store/sale_list.html'
     paginate_by = 5
+    
 
 class UpdatedPriceList(LoginRequiredMixin, View):
 
