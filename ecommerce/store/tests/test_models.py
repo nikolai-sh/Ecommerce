@@ -1,5 +1,6 @@
 from django.test import TestCase
-
+from decimal import Decimal
+from django.core.files.uploadedfile import SimpleUploadedFile
 from store.models import Item, Employee, Sale, UpdatedItemPrice
 
 class EmployeeModelTest(TestCase):
@@ -26,30 +27,37 @@ class EmployeeModelTest(TestCase):
 
 class ItemModelTest(TestCase):
 
-    @classmethod
-    def setUpTestData(cls):
-        #Set up non-modified objects used by all test methods
-        Item.objects.create(title='Phone', slug='phone', image='image.jpeg', price=1200)
+    def setUp(self):
+        self.item = Item.objects.create(
+            title='Phone', 
+            slug='phone', 
+            image= SimpleUploadedFile('phone_image.jpg', content=b'', content_type='image/jpg'), 
+            price= Decimal(1200)
+        )
     
     def test_title_label(self):
-        item = Item.objects.get(id=1)
-        field_label = item._meta.get_field('title').verbose_name
+        field_label = self.item._meta.get_field('title').verbose_name
         self.assertEquals(field_label,'Наименование')
     
     def test_title_max_length(self):
-        item = Item.objects.get(id=1)
-        max_length = item._meta.get_field('title').max_length
+        max_length = self.item._meta.get_field('title').max_length
         self.assertEquals(max_length, 255)
     
     def test_price_label(self):
-        item = Item.objects.get(id=1)
-        field_label = item._meta.get_field('price').verbose_name
+        field_label = self.item._meta.get_field('price').verbose_name
         self.assertEquals(field_label,'Цена')
     
     def test_price_max_length(self):
-        item = Item.objects.get(id=1)
-        max_digits = item._meta.get_field('price').max_digits
+        max_digits = self.item._meta.get_field('price').max_digits
         self.assertEquals(max_digits, 9)
+    
+    def test_update_price_correct_saved(self):
+        current_price = self.item.price
+        # update_price
+        self.item.price = 2500
+        self.item.save(update_fields=['price'])
+        self.assertEquals(current_price, 1200)
+        self.assertEquals(self.item.price, 2500)
 
 
 class SaleModelTest(TestCase):
@@ -58,7 +66,12 @@ class SaleModelTest(TestCase):
     def setUpTestData(cls):
         #Set up non-modified objects used by all test methods
         employee = Employee.objects.create(name='Employee1')
-        item = Item.objects.create(title='Phone', slug='phone', image='image.jpeg', price=1200)
+        item = Item.objects.create(
+                title='Phone', 
+                slug='phone',
+                image= SimpleUploadedFile('phone_image.jpg', content=b'', content_type='image/jpg'), 
+                price= Decimal(1200)
+                )
         Sale.objects.create(item = item, employee= employee, qty=2)
     
     def test_item_label(self):
