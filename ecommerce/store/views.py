@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.base import View
@@ -16,7 +16,7 @@ class ConfirmSaleView(View):
 
     def get(self, request, *args, **kwargs):
         context = {}
-        item = Item.objects.get(slug=self.kwargs.get('slug'))
+        item = get_object_or_404(Item, slug=self.kwargs.get('slug'))
         context["item"] = item
         context["form"] = SalesForms()
         return render(request,'store/confirm_sale.html', context=context )
