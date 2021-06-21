@@ -46,6 +46,6 @@ class SaleList(LoginRequiredMixin, ListView):
 class UpdatedPriceList(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
-        item = Item.objects.get(slug=self.kwargs.get('slug'))
+        item = get_object_or_404(Item, slug=self.kwargs.get('slug'))
         updated_price = UpdatedItemPrice.objects.filter(item=item)
         return render(request, 'store/updated_price_list.html', {'updated_price': updated_price, 'item': item })
