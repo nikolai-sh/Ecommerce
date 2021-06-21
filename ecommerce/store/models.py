@@ -7,8 +7,11 @@ class Item(models.Model):
 
     title = models.CharField(max_length=255, verbose_name="Наименование")
     slug = models.SlugField(unique=True)
-    image = models.ImageField(upload_to="images/", verbose_name="Изображение")
+    image = models.ImageField(default="default.jpg", upload_to="items_image/", verbose_name="Изображение")
     price = models.DecimalField(max_digits=9, decimal_places=2, verbose_name="Цена")
+
+    class Meta:
+        ordering = ["title"]  
    
     def __str__(self) -> str:
         return self.title
