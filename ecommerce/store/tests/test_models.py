@@ -93,3 +93,38 @@ class SaleModelTest(TestCase):
         sale = Sale.objects.get(id=1)
         total_price = sale.item.price * sale.qty
         self.assertEqual(total_price, 2400)
+
+class UpdatedItemPriceTest(TestCase):
+    
+    def setUp(self):
+        self.item = Item.objects.create(
+            title='Phone', 
+            slug='phone', 
+            image= SimpleUploadedFile('phone_image.jpg', content=b'', content_type='image/jpg'), 
+            price= Decimal(1200)
+        )
+    
+    def test_create_UpdatedItemPrice_if_price_updated(self):
+        # update price
+        self.item.price = 2500
+        self.item.save(update_fields=['price'])
+        obj = UpdatedItemPrice.objects.first()
+        self.assertIsNotNone(obj)
+        self.assertEqual(obj.updated_price, 2500)
+    
+    def test_create_UpdatedItemPrice_if_price_in_updated_fields(self):
+        # update price and slug fields
+        self.item.price = 2500
+        self.item.slug = 'new_phone'
+        self.item.save(update_fields=['price', 'slug'])
+        obj = UpdatedItemPrice.objects.first()
+        self.assertIsNotNone(obj)
+        self.assertEqual(obj.updated_price, 2500)
+        
+    def test_not_create_UpdatedItemPrice_if_price_not_updated(self):
+        # update slug
+        self.item.slug = 'new_phone'
+        self.item.save(update_fields=['slug'])
+        obj = UpdatedItemPrice.objects.count()
+        self.assertEqual(obj, 0)
+        self.assertEqual(self.item.slug, 'new_phone')
